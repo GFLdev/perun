@@ -12,6 +12,8 @@
 #ifndef CIRC_COMP_H
 #define CIRC_COMP_H
 
+#include <math.h>
+
 typedef enum circ_comp_type {
   RESISTOR,
   CAPACITOR,
@@ -24,5 +26,9 @@ typedef enum circ_comp_type {
 } circ_comp_type_t;
 
 typedef struct circ_comp circ_comp_t;
+typedef struct circ_resistor circ_resistor_t;
+typedef struct circ_capacitor circ_capacitor_t;
+
+circ_comp_t *circ_new_resistor(char *label, float_t ohms);
 
 #endif // !CIRC_COMP_H

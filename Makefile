@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 CC = gcc
 
 SRC_DIR   = src
@@ -10,13 +11,14 @@ INCLUDES  = $(addprefix -I,$(INC_DIRS))
 CFLAGS    = -Wall $(INCLUDES)
 
 SRC 		  = $(shell find $(SRC_DIR) -name "*.c")
+HEADERS   = $(shell find $(INC_DIRS) -name "*.h")
 OBJ       = $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRC))
 
 all: $(BIN)
 
 # Linkage
 $(BIN): $(OBJ) | $(BUILD_DIR)
-		$(CC) $(OBJ) -o $@
+	$(CC) $(OBJ) -o $@
 
 # Each .c to .o inside BUILD_DIR
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
@@ -25,7 +27,11 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 
 # Create BUILD_DIR if it does not exists
 $(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
+	@mkdir -p $(BUILD_DIR)
+
+# Formatting
+format:
+	@clang-format -i $(SRC) $(HEADERS)
 
 # Clean
 clean:
